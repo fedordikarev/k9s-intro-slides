@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Вводный курс: Kubernetes + kubectl + k9s + Helm + Helmfile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+<section>
+  <h1>Вводный курс</h1>
+  <h3>Kubernetes + kubectl + k9s + Helm + Helmfile</h3>
+</section>
+
+<section>
+  <h2>Зачем Kubernetes?</h2>
+  <ul>
+    <li>Оркестрация контейнеров</li>
+    <li>Автоматический деплой, масштабирование, самовосстановление</li>
+    <li>Почему это важно для нас</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Архитектура на пальцах</h2>
+  <p>Pod → Deployment → Service → Ingress</p>
+  <p>Control plane упоминаем только концептуально</p>
+</section>
+
+<section>
+  <h2>Основные сущности</h2>
+  <ul>
+    <li><b>Pod</b>: минимальная единица</li>
+    <li><b>Deployment</b>: декларативный контроль</li>
+    <li><b>Service</b>: доступ к Pod’ам</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Мини-пример</h2>
+  <pre><code>kubectl apply -f deployment.yaml</code></pre>
+  <p>Что при этом создается в кластере</p>
+</section>
+
+<section>
+  <h2>Подключение к кластеру</h2>
+  <ul>
+    <li>kubeconfig</li>
+    <li>контексты: <code>kubectl config use-context</code></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Основные команды kubectl</h2>
+  <ul>
+    <li><code>kubectl get</code> (pods, deployments, svc)</li>
+    <li><code>kubectl describe</code></li>
+    <li><code>kubectl logs</code></li>
+    <li><code>kubectl exec</code></li>
+  </ul>
+  <p>Пример цепочки: найти pod → посмотреть логи</p>
+</section>
+
+<section>
+  <h2>Практические советы kubectl</h2>
+  <ul>
+    <li>Флаги: <code>-o wide</code>, <code>-n namespace</code>, <code>--watch</code></li>
+    <li>Алиасы: <code>k</code>, <code>kgp</code>, <code>kgns</code></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Что такое k9s</h2>
+  <ul>
+    <li>TUI-интерфейс к кластеру</li>
+    <li>Быстрее и удобнее, чем kubectl</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Возможности k9s</h2>
+  <ul>
+    <li>Навигация по ресурсам</li>
+    <li>Логи и exec</li>
+    <li>Фильтрация и горячие клавиши</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Зачем нужен Helm?</h2>
+  <ul>
+    <li>Проблема: много YAML</li>
+    <li>Chart + Values как шаблон и параметры</li>
+    <li>Повторное использование</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Пример работы с Helm</h2>
+  <pre><code>helm install nginx bitnami/nginx</code></pre>
+  <p>Изменение параметров через values.yaml</p>
+</section>
+
+<section>
+  <h2>Зачем нужен Helmfile?</h2>
+  <ul>
+    <li>Управление несколькими чартами</li>
+    <li>Декларативный список релизов</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Пример Helmfile.yaml</h2>
+  <pre><code class="yaml">releases:
+  - name: nginx
+    chart: bitnami/nginx
+    values: [values/nginx.yaml]
+  - name: redis
+    chart: bitnami/redis
+</code></pre>
+  <p>Одна команда: <code>helmfile apply</code></p>
+</section>
+
+<section>
+  <h2>Итоговый сценарий</h2>
+  <ol>
+    <li>Посмотреть состояние (kubectl / k9s)</li>
+    <li>Найти проблему (logs / describe / exec)</li>
+    <li>Деплой новой версии (helm / helmfile)</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Полезные ссылки</h2>
+  <ul>
+    <li><a href="https://kubernetes.io/docs">kubernetes.io/docs</a></li>
+    <li><a href="https://helm.sh/docs">helm.sh/docs</a></li>
+    <li><a href="https://helmfile.readthedocs.io">helmfile.readthedocs.io</a></li>
+    <li><a href="https://www.katacoda.com/courses/kubernetes">Katacoda Kubernetes</a></li>
+  </ul>
+</section>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true
+      });
+    </script>
+  </body>
+</html>
+
